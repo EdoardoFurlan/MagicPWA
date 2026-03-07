@@ -1,0 +1,16 @@
+name: Deploy to Raspberry Pi
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted  # Questo dice a GitHub di eseguire i comandi sul TUO Raspberry
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and Restart Container
+        run: |
+          docker compose up -d --build

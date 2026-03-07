@@ -1,0 +1,12 @@
+services:
+  backend:
+    build: ./backend
+    container_name: receipt-backend
+    restart: always
+    volumes:
+      - ./data:/app/data         # Salva i dati fuori dal container per non perderli
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./data/receipts.db
+      - TAILSCALE_IP=100.80.129.104 # Opzionale per sicurezza extra

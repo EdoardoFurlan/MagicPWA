@@ -1,0 +1,16 @@
+# Web Framework
+fastapi
+uvicorn[standard]
+python-multipart    # Necessario per ricevere file/immagini via API
+
+# OCR e Immagini
+pytesseract         # Wrapper per l'engine Tesseract (molto leggero su Rasp)
+opencv-python-headless # Manipolazione immagini senza interfaccia grafica
+Pillow              # Gestione formati immagine
+
+# Elaborazione Dati ed Excel
+pandas              # Manipolazione tabelle
+openpyxl            # Scrittura di file .xlsx (il motore per Excel)
+
+# Database
+sqlalchemy          # Per gestire il database in modo professionale
