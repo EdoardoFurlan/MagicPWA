@@ -17,7 +17,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @app.get("/", tags=["General"])
 async def root():
-    return {"message": "Il server degli scontrini è attivo!"}
+    return {"message": "Il server degli scontrini è attivo! :)"}
 
 @app.post("/upload-receipt/", tags=["Core"])
 async def upload_receipt(file: UploadFile = File(...)):
