@@ -3,6 +3,7 @@ services:
     build: ./backend
     container_name: receipt-backend
     restart: always
+    user: "1000:1000"
     volumes:
       - ./data:/app/data         # Salva i dati fuori dal container per non perderli
     ports:
