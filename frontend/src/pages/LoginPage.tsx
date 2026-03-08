@@ -5,6 +5,7 @@ import { loginSchema } from '../schemas/auth';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { logger } from '@/services/logger';
 
 export function LoginPage() {
   const setToken = useAuthStore((state) => state.setToken);
@@ -26,6 +27,7 @@ export function LoginPage() {
 
     // Qui chiameresti il backend. Per ora dummy login:
     setToken("token-jwt-finto-dal-backend");
+    logger.info("Utente loggato con successo", { username: data.username });
     navigate({ to: '/' });
   };
 

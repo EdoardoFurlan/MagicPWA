@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Header
 from fastapi.responses import JSONResponse
 import uvicorn
 import shutil
@@ -6,6 +6,7 @@ import os
 from datetime import datetime
 import logging
 from logging.handlers import RotatingFileHandler
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Receipt Scanner API",
@@ -13,10 +14,31 @@ app = FastAPI(
     version="1.0.0"
 )
 
+# Configura le origini permesse
+origins = [
+    "http://localhost:5173",          # Frontend in sviluppo su PC
+    "http://127.0.0.1:5173",
+    "http://100.80.129.104:5173",          # Sostituisci con l'IP Tailscale del tuo PC
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,            # Permette queste origini
+    allow_credentials=True,
+    allow_methods=["*"],               # Permette tutti i metodi (POST, GET, OPTIONS, ecc.)
+    allow_headers=["*"],               # Permette tutti gli header (Authorization, Content-Type, ecc.)
+)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+LOG_DIR = os.path.join(BASE_DIR, "data", "logs")
+LOG_FILE = os.path.join(LOG_DIR, "app_logs.log")
+
+# 2. Creiamo la cartella se non esiste (makedirs con exist_ok=True è perfetto)
+os.makedirs(LOG_DIR, exist_ok=True)
+
 # Configurazione Rolling Logs (Max 5MB per file, tiene gli ultimi 5 file)
 log_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 log_handler = RotatingFileHandler(
-    'data/logs/log.log', 
+    LOG_FILE, 
     maxBytes=5*1024*1024, 
     backupCount=5
 )
@@ -65,6 +87,7 @@ async def upload_receipt(file: UploadFile = File(...)):
 @app.post("/api/logs", tags=["Logging"])
 async def receive_logs(entry: dict, authorization: str = Header(None)):
     # Qui potresti validare il JWT prima di scrivere
+
     level = entry.get("level", "INFO").upper()
     message = entry.get("message")
     ctx = entry.get("context", {})
