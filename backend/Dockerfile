@@ -2,7 +2,7 @@
 FROM python:3.11-slim
 
 # Installa dipendenze di sistema per l'OCR (Tesseract/OpenCV)
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr \
     libgl1 \
     && rm -rf /var/lib/apt/lists/*
