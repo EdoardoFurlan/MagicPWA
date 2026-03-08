@@ -10,18 +10,35 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { useAuthStore } from '../store/authStore';
 import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
+import { useEffect } from 'react';
+import {useNavigate} from '@tanstack/react-router';
+
+
+
+
+const RootComponent = () => {
+  const token = useAuthStore((state) => state.token);
+  const navigate = useNavigate();
+
+  // Reagisce ai cambiamenti del token
+  useEffect(() => {
+    if (!token) {
+      navigate({ to: '/login' });
+    }
+  }, [token, navigate]);
+
+  return (
+    <div className="min-h-screen bg-background p-4">
+      <Outlet />
+      <TanStackRouterDevtools />
+    </div>
+  );
+};
+
 
 // 1. Root Route: Il guscio dell'app
 const rootRoute = createRootRoute({
-  component: () => (
-    <>
-      <div className="min-h-screen bg-background p-4">
-        <Outlet /> 
-      </div>
-      {/* Devtools utili in fase di sviluppo */}
-      <TanStackRouterDevtools />
-    </>
-  ),
+    component: RootComponent
 });
 
 // 2. Rotta Index (Home) - Protetta
