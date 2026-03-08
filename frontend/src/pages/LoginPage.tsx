@@ -20,7 +20,7 @@ export function LoginPage() {
     const result = loginSchema.safeParse(data);
     
     if (!result.success) {
-      setError(result.error.message);
+      setError(result.error.issues.map(issue => issue.message).join(', '));
       return;
     }
 
@@ -38,7 +38,7 @@ export function LoginPage() {
             <Input name="username" placeholder="Username" />
             <Input name="password" type="password" placeholder="Password" />
             {error && <p className="text-destructive text-sm">{error}</p>}
-            <Button type="submit" className="w-full">Accedi</Button>
+            <Button type="submit" className="w-full bg-white dark:bg-gray-800 text-black dark:text-white">Accedi</Button>
           </form>
         </CardContent>
       </Card>

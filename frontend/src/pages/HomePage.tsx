@@ -16,12 +16,12 @@ export function HomePage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Pulsantoni ottimizzati per il pollice su smartphone */}
-        <Button className="h-32 text-lg flex flex-col gap-2">
+        <Button className="h-32 text-lg flex flex-col gap-2 bg-white dark:bg-gray-800 text-black dark:text-white">
           <Camera className="h-8 w-8" />
           Scansiona Scontrino
         </Button>
         
-        <Button variant="outline" className="h-32 text-lg flex flex-col gap-2">
+        <Button variant="outline" className="h-32 text-lg flex flex-col gap-2 border-gray-300 dark:border-gray-600 text-black dark:text-white">
           <FileSpreadsheet className="h-8 w-8" />
           Esporta Excel
         </Button>
