@@ -1,23 +1,61 @@
-type LogLevel = 'debug' |'info' | 'error' | 'warn';
+import { useAuthStore } from "@/store/authStore";
+import { logSchema, type LogEntry, logLevels } from "@/schemas/log";
+
+type LogLevel = (typeof logLevels)[number];
 
 class Logger {
-  private async sendToBackend(level: LogLevel, message: string) {
+  private async sendToBackend(level: LogLevel, message: string, context?: Record<string, any>) {
+    const token = useAuthStore.getState().token;
+    
+    const entry: LogEntry = {
+      level,
+      message,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      context: context || {}
+    };
+
+    // Validazione locale prima dell'invio
+    const validation = logSchema.safeParse(entry);
+    if (!validation.success) {
+      console.error("Schema log non valido:", validation.error);
+      return;
+    }
+
+    // Console mirror per lo sviluppo locale
+    this.consoleMirror(level, message, entry.context);
+
     try {
-      // Chiamata all'API dummy che implementeremo nel backend
-      await fetch('/api/logs', {
+      // Nota: Usiamo l'URL completo del Raspberry o un proxy di Vite
+      await fetch('http://localhost:8000/api/logs', {
         method: 'POST',
-        body: JSON.stringify({ level, message, timestamp: new Date().toISOString() }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(entry),
       });
     } catch (e) {
-      console.error("Logging fallito", e);
+      // Se il backend è offline (es. niente rete), salviamo in localStorage?
+      // Per ora ci accontentiamo del fail silenzioso
+      console.warn("Invio log al backend fallito (Offline?)");
     }
   }
 
-  debug(msg: string) { this.sendToBackend('debug', msg); console.error(msg); }
-  info(msg: string) { this.sendToBackend('info', msg); console.log(msg); }
-  error(msg: string) { this.sendToBackend('error', msg); console.error(msg); }
-  warn(msg: string) { this.sendToBackend('warn', msg); console.error(msg); }
+  private consoleMirror(level: LogLevel, msg: string, ctx: any) {
+    const styles = {
+      DEBUG: "color: gray",
+      INFO: "color: blue",
+      WARN: "color: orange",
+      ERROR: "color: red; font-weight: bold"
+    };
+    console.log(`%c[${level}] %s`, styles[level], msg, ctx);
+  }
 
+  debug(msg: string, ctx?: any) { this.sendToBackend('DEBUG', msg, ctx); }
+  info(msg: string, ctx?: any) { this.sendToBackend('INFO', msg, ctx); }
+  warn(msg: string, ctx?: any) { this.sendToBackend('WARN', msg, ctx); }
+  error(msg: string, ctx?: any) { this.sendToBackend('ERROR', msg, ctx); }
 }
 
 export const logger = new Logger();
