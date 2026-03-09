@@ -13,6 +13,7 @@ import { HomePage } from '../pages/HomePage';
 import { useEffect } from 'react';
 import {useNavigate} from '@tanstack/react-router';
 import { Navbar } from '../components/navbar';
+import { NfcPage } from '../pages/NfcPage';
 
 
 
@@ -69,8 +70,15 @@ const loginRoute = createRoute({
   component: LoginPage,
 });
 
+
+const nfcRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/nfc',
+  component: NfcPage
+});
+
 // 4. Creazione dell'albero delle rotte
-const routeTree = rootRoute.addChildren([indexRoute, loginRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, loginRoute, nfcRoute]);
 
 export const router = createRouter({ routeTree });
 

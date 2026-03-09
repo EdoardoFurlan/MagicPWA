@@ -17,8 +17,14 @@ app = FastAPI(
 # Configura le origini permesse
 origins = [
     "http://localhost:5173",          # Frontend in sviluppo su PC
+    "https://localhost:5173",
     "http://127.0.0.1:5173",
     "http://100.80.129.104:5173",          # Sostituisci con l'IP Tailscale del tuo PC
+    "https://100.80.129.104:5173",          # Sostituisci con l'IP Tailscale del tuo PC
+    "https://100.77.104.42:5173",          
+    "https://100.69.84.23:5173",  
+            
+
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -43,9 +49,15 @@ log_handler = RotatingFileHandler(
     backupCount=5
 )
 log_handler.setFormatter(log_formatter)
+
+# Handler console
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(log_formatter)
+
 logger_api = logging.getLogger("AppLogger")
 logger_api.setLevel(logging.DEBUG)
 logger_api.addHandler(log_handler)
+logger_api.addHandler(console_handler)
 
 # Cartella temporanea per salvare le foto caricate
 UPLOAD_DIR = "data/uploads"
