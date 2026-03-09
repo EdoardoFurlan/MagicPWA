@@ -1,13 +1,6 @@
 # Usa un'immagine Python leggera
 FROM python:3.11-slim
 
-# Crea un utente con lo stesso UID/GID di pi
-RUN groupadd -g 1000 pi && \
-    useradd -m -u 1000 -g 1000 pi
-
-# Cambia utente
-USER pi
-
 # Installa dipendenze di sistema per l'OCR (Tesseract/OpenCV)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tesseract-ocr \
