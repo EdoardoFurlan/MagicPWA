@@ -1,9 +1,7 @@
-import { useAuthStore } from '../store/authStore';
 import { Button } from  "@/components/ui/button";
-import { LogOut, Camera, FileSpreadsheet } from "lucide-react";
+import { Camera, FileSpreadsheet } from "lucide-react"; //LogOut
 
 export function HomePage() {
-  const logout = useAuthStore((state) => state.logout);
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">

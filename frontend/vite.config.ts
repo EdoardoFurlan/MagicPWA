@@ -39,7 +39,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    https: true // Usa il certificato SSL generato dal plugin
+    https: true as any// Usa il certificato SSL generato dal plugin
   }
 })
 

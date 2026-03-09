@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router';
 import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from '@/components/ui/tooltip';
-import { Camera, Home, SmartphoneNfc, FileSpreadsheet, LogOut, ReceiptText } from 'lucide-react';
+import { Home, SmartphoneNfc, LogOut, ReceiptText } from 'lucide-react';//Camera,FileSpreadsheet
 
 export function Navbar() {
     const logout = useAuthStore((state) => state.logout);
