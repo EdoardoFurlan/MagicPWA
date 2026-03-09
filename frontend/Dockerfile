@@ -1,12 +1,12 @@
 # Stage 1: Build
 
-FROM jarredsumner/bun:latest AS build
+FROM node:20-bullseye AS build
 
 WORKDIR /app
-COPY package.json bun.lockb ./
-RUN bun install
+COPY package.json package-lock.json ./
+RUN npm ci
 COPY . .
-RUN bun run build
+RUN npm run build
 
 # Stage 2: Serve con Nginx
 FROM nginx:alpine
