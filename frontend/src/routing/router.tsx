@@ -12,6 +12,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
 import { useEffect } from 'react';
 import {useNavigate} from '@tanstack/react-router';
+import { Navbar } from '../components/navbar';
 
 
 
@@ -28,8 +29,11 @@ const RootComponent = () => {
   }, [token, navigate]);
 
   return (
-    <div className="min-h-screen bg-background p-4">
-      <Outlet />
+    <div className="min-h-screen bg-background">
+      <Navbar /> {/* <--- La Navbar ora è qui */}
+      <main className="pt-20 px-4 pb-8 max-w-2xl mx-auto">
+        <Outlet />
+      </main>
       <TanStackRouterDevtools />
     </div>
   );

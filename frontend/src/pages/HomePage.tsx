@@ -9,9 +9,6 @@ export function HomePage() {
     <div className="max-w-2xl mx-auto space-y-6">
       <header className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">I miei Scontrini</h1>
-        <Button variant="ghost" size="icon" onClick={() => logout()}>
-          <LogOut className="h-5 w-5" />
-        </Button>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
