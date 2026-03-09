@@ -1,13 +1,17 @@
 {
-  "files": [],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "strict": true
   },
+  "moduleResolution": "Node",
+  "esModuleInterop": true,
+  "skipLibCheck": true,
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+  "include": []   // vuoto, perché vogliamo solo compilare i progetti referenziati
 }
