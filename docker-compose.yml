@@ -1,4 +1,15 @@
 services:
+  reverse-proxy:
+    image: caddy:latest
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
   backend:
     build: ./backend
     container_name: receipt-backend
@@ -10,3 +21,10 @@ services:
     environment:
       - DATABASE_URL=sqlite:///./data/receipts.db
       - TAILSCALE_IP=100.80.129.104 # Opzionale per sicurezza extra
+
+  frontend:
+    build: ./frontend
+    container_name: receipt-frontend
+    restart: always
+    depends_on:
+      - backend
