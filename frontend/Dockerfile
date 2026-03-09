@@ -1,6 +1,6 @@
 # Stage 1: Build
 
-FROM dhi.io/bun:1-debian13-dev AS build
+FROM jarredsumner/bun:latest AS build
 
 WORKDIR /app
 COPY package.json bun.lockb ./
