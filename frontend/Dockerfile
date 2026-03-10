@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package.json package-lock.json tsconfig*.json ./
 RUN npm ci
 COPY . .
+
+RUN ls -R src/lib
+
 RUN npm run build
 
 # Stage 2: Serve con Nginx
