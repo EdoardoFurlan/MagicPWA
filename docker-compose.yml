@@ -10,6 +10,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
+      - /var/run/tailscale/tailscaled.sock:/var/run/tailscale/tailscaled.sock 
     depends_on:
       - frontend
       - backend
@@ -37,4 +38,5 @@ services:
 # --- QUESTA È LA PARTE CHE MANCAVA ---
 volumes:
   caddy_data:
+
   caddy_config:
