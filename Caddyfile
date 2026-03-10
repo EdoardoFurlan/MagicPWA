@@ -1,8 +1,13 @@
 pi-235.tail-net.ts.net {
+    # Forza Caddy a generare un certificato interno (Self-Signed)
+    # Invece di provare a chiederlo a Let's Encrypt
+    tls internal
+
     reverse_proxy frontend:80
     
     # Indirizza le chiamate API al backend
     handle_path /api/* {
         reverse_proxy backend:8000
     }
+
 }
