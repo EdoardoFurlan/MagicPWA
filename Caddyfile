@@ -1,4 +1,4 @@
-pi-235.tail-net.ts.net {
+100.80.129.104 {
     # Forza Caddy a generare un certificato interno (Self-Signed)
     # Invece di provare a chiederlo a Let's Encrypt
     tls internal
@@ -11,3 +11,4 @@ pi-235.tail-net.ts.net {
     }
 
 }
+
