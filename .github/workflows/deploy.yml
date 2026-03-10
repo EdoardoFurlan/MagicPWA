@@ -13,4 +13,8 @@ jobs:
 
       - name: Build and Restart Container
         run: |
+          # Crea la cartella se non esiste
+          mkdir -p ./data/logs
+          # Forza i permessi per l'utente 1000 (pi)
+          sudo chown -R 1000:1000 ./data
           docker compose up -d --build
