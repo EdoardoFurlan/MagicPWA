@@ -1,8 +1,4 @@
 pi-235.tail8036f8.ts.net {
-
-    tls {
-        get_certificate tailscale
-    }
     reverse_proxy frontend:80
     
     # Indirizza le chiamate API al backend
@@ -11,6 +7,7 @@ pi-235.tail8036f8.ts.net {
     }
 
 }
+
 
 
 
