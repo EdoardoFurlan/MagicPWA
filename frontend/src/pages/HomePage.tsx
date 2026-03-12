@@ -3,6 +3,14 @@ import { Camera, FileSpreadsheet } from "lucide-react"; //LogOut
 
 export function HomePage() {
 
+
+
+  //todo gestire caricamento scontrino con fotocamera, e chiamata api trmite apiFetch() appena creata, con gestione token e errori (es. token scaduto)
+
+
+
+
+
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <header className="flex justify-between items-center">
