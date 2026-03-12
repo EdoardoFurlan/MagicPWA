@@ -2,13 +2,16 @@ pi-235.tail8036f8.ts.net {
 # Carica i certificati dai file montati
     tls /etc/caddy/certs/cert.crt /etc/caddy/certs/cert.key
 
-    handle /api/* {
-        reverse_proxy backend:8000
-    }
+    route {
+        # 1. Prova a vedere se è un'API
+        handle /api/* {
+            reverse_proxy backend:8000
+        }
 
-    # Tutto il resto va al frontend
-    handle {
-        reverse_proxy frontend:80
+        # 2. Se non è un'API, manda al frontend
+        handle {
+            reverse_proxy frontend:80
+        }
     }
 
 }
