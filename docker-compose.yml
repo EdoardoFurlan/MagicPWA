@@ -6,6 +6,8 @@ services:
       - "80:80"
       - "443:443"
     user: "1000:1000"
+    env_file:
+      - /home/pi/env/.env
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
@@ -17,6 +19,8 @@ services:
 
   backend:
     build: ./backend
+    env_file:
+      - /home/pi/env/.env
     environment:
       - SECRET_KEY=${BACKEND_SECRET_KEY}
       - ADMIN_USERNAME=${ADMIN_USERNAME}
