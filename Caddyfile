@@ -5,7 +5,7 @@ pi-235.tail8036f8.ts.net {
     reverse_proxy frontend:80
     
     # Indirizza le chiamate API al backend
-    handle_path /api/* {
+    handle /api/* {
         reverse_proxy backend:8000
     }
 
