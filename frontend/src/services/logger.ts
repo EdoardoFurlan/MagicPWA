@@ -27,7 +27,7 @@ class Logger {
 
     try {
       // Nota: Usiamo l'URL completo del Raspberry o un proxy di Vite
-      await fetch('api/logs', {
+      await fetch('/api/logs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
