@@ -37,8 +37,6 @@ export function LoginPage() {
 
       const { access_token } = await response.json();
 
-      // Salviamo il token (meglio in localStorage per persistenza al refresh)
-      localStorage.setItem('magic_token', access_token);
       setToken(access_token); // Aggiorna lo stato globale/context
       
       logger.info("Login effettuato con successo");
