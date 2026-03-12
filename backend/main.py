@@ -1,12 +1,25 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException, Header
+from fastapi import FastAPI, File, UploadFile, HTTPException, Header, Depends
 from fastapi.responses import JSONResponse
 import uvicorn
 import shutil
 import os
-from datetime import datetime
+from datetime import datetime,timedelta
 import logging
 from logging.handlers import RotatingFileHandler
 from fastapi.middleware.cors import CORSMiddleware
+from jose import jwt
+from pydantic import BaseModel
+
+
+# Configurazione (Usa variabili d'ambiente in produzione!)
+SECRET_KEY = os.getenv("SECRET_KEY", "chiave-di-emergenza-non-sicura")
+ALLOWED_USER = os.getenv("ADMIN_USERNAME", "dev_secret")
+ALLOWED_PASS = os.getenv("ADMIN_PASSWORD", "dev_password")
+ALGORITHM = "HS256"
+
+class LoginRequest(BaseModel):
+    username: str
+    password: str
 
 app = FastAPI(
     title="Receipt Scanner API",
@@ -115,6 +128,21 @@ async def receive_logs(entry: dict, authorization: str = Header(None)):
     return {"status": "logged"}
 
 
+@app.post("/api/login")
+async def login(req: LoginRequest):
+    # Credenziali fisse per ora
+    if req.username == ALLOWED_USER and req.password == ALLOWED_PASS:
+        # Creazione Token
+        expire = datetime.utcnow() + timedelta(hours=24)
+        to_encode = {"sub": req.username, "exp": expire}
+        encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+        
+        return {"access_token": encoded_jwt, "token_type": "bearer"}
+    
+    raise HTTPException(status_code=401, detail="Credenziali errate")
+
+
+logger_api.debug("User: " + ALLOWED_USER)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)

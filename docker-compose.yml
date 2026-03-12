@@ -17,6 +17,10 @@ services:
 
   backend:
     build: ./backend
+    environment:
+      - SECRET_KEY=${BACKEND_SECRET_KEY}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
     container_name: receipt-backend
     restart: always
     user: "1000:1000"

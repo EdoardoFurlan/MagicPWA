@@ -39,7 +39,14 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    https: true as any// Usa il certificato SSL generato dal plugin
+    https: true as any,// Usa il certificato SSL generato dal plugin
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        // Non serve rewrite se il backend ha già /api nel percorso
+      }
+    }
   }
 })
 

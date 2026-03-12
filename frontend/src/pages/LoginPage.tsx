@@ -19,16 +19,33 @@ export function LoginPage() {
 
     // Validazione Zod
     const result = loginSchema.safeParse(data);
-    
     if (!result.success) {
-      setError(result.error.issues.map(issue => issue.message).join(', '));
+      setError(result.error.issues[0].message);
       return;
     }
 
-    // Qui chiameresti il backend. Per ora dummy login:
-    setToken("token-jwt-finto-dal-backend");
-    logger.info("Utente loggato con successo", { username: data.username });
-    navigate({ to: '/' });
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Credenziali non valide');
+      }
+
+      const { access_token } = await response.json();
+
+      // Salviamo il token (meglio in localStorage per persistenza al refresh)
+      localStorage.setItem('magic_token', access_token);
+      setToken(access_token); // Aggiorna lo stato globale/context
+      
+      logger.info("Login effettuato con successo");
+      navigate({ to: '/' });
+    } catch (err: any) {
+      setError(err.message);
+    }
   };
 
   return (

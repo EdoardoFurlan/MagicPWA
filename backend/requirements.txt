@@ -2,6 +2,9 @@
 fastapi
 uvicorn[standard]
 python-multipart    # Necessario per ricevere file/immagini via API
+python-jose[cryptography] 
+passlib[bcrypt]
+
 
 # OCR e Immagini
 pytesseract         # Wrapper per l'engine Tesseract (molto leggero su Rasp)
