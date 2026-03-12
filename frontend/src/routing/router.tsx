@@ -6,14 +6,14 @@ import {
   //Link, 
   redirect
 } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { useAuthStore } from '../store/authStore';
 import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import {useNavigate} from '@tanstack/react-router';
 import { Navbar } from '../components/navbar';
 import { NfcPage } from '../pages/NfcPage';
+import React from 'react';
 
 
 
@@ -29,13 +29,25 @@ const RootComponent = () => {
     }
   }, [token, navigate]);
 
+
+const TanStackRouterDevtools =
+  import.meta.env.MODE === 'production'
+    ? () => null
+    : React.lazy(() =>
+        import('@tanstack/router-devtools').then((res) => ({
+          default: res.TanStackRouterDevtools,
+        })),
+      )
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar /> {/* <--- La Navbar ora è qui */}
       <main className="pt-20 px-4 pb-8 max-w-2xl mx-auto">
         <Outlet />
       </main>
-      <TanStackRouterDevtools />
+      <Suspense>
+        <TanStackRouterDevtools />
+      </Suspense>
     </div>
   );
 };
