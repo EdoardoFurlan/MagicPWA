@@ -21,6 +21,7 @@ services:
       - SECRET_KEY=${BACKEND_SECRET_KEY}
       - ADMIN_USERNAME=${ADMIN_USERNAME}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - DATABASE_URL=sqlite:///./data/receipts.db
     container_name: receipt-backend
     restart: always
     user: "1000:1000"
@@ -28,9 +29,6 @@ services:
       - ./data:/app/data         # Salva i dati fuori dal container per non perderli
     ports:
       - "8000:8000"
-    environment:
-      - DATABASE_URL=sqlite:///./data/receipts.db
-      - TAILSCALE_IP=100.80.129.104 # Opzionale per sicurezza extra
 
   frontend:
     build: ./frontend
