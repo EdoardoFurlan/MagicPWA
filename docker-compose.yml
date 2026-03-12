@@ -21,11 +21,6 @@ services:
     build: ./backend
     env_file:
       - /home/pi/env/.env
-    environment:
-      - SECRET_KEY=${BACKEND_SECRET_KEY}
-      - ADMIN_USERNAME=${ADMIN_USERNAME}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - DATABASE_URL=sqlite:///./data/receipts.db
     container_name: receipt-backend
     restart: always
     user: "1000:1000"
