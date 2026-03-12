@@ -9,7 +9,7 @@ COPY . .
 
 RUN ls -R src/lib
 
-RUN npm run build
+RUN NODE_ENV=production npm run build
 
 # Stage 2: Serve con Nginx
 FROM nginx:alpine
