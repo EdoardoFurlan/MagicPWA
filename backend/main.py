@@ -36,8 +36,9 @@ origins = [
     "https://100.80.129.104:5173",          # Sostituisci con l'IP Tailscale del tuo PC
     "https://100.77.104.42:5173",          
     "https://100.69.84.23:5173", 
-    "https://pi-235.tail8036f8.ts.net" 
-            
+    "https://pi-235.tail8036f8.ts.net",
+    "http://home.dock.receipt-app",
+    "https://home.dock.receipt-app"
 
 ]
 app.add_middleware(

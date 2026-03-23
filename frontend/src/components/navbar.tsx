@@ -72,21 +72,3 @@ export function Navbar() {
     );
 }
 
-export function BottomNav() {
-    return (
-        <div className="sm:hidden fixed bottom-0 left-0 right-0 border-t bg-background flex justify-around py-3 px-2 z-50">
-            <Link to="/" className="flex flex-col items-center gap-1 text-muted-foreground" activeProps={{ className: 'text-primary' }}>
-                <Home className="h-6 w-6" />
-                <span className="text-[10px]">Home</span>
-            </Link>
-            {/* <Link to="/scan" className="flex flex-col items-center gap-1 text-muted-foreground" activeProps={{ className: 'text-primary' }}>
-        <Camera className="h-6 w-6" />
-        <span className="text-[10px]">Scansiona</span>
-      </Link>
-      <Link to="/export" className="flex flex-col items-center gap-1 text-muted-foreground" activeProps={{ className: 'text-primary' }}>
-        <FileSpreadsheet className="h-6 w-6" />
-        <span className="text-[10px]">Export</span>
-      </Link> */}
-        </div>
-    );
-}

@@ -1,46 +1,31 @@
 services:
-  reverse-proxy:
-    image: caddy:latest
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-    user: "1000:1000"
-    env_file:
-      - /home/pi/env/.env
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-      - /home/pi/certs:/etc/caddy/certs
-    depends_on:
-      - frontend
-      - backend
-
   backend:
     build: ./backend
-    env_file:
-      - /home/pi/env/.env
     container_name: receipt-backend
     restart: always
-    user: "1000:1000"
+    environment:
+      - BACKEND_SECRET_KEY=una-chiave-molto-lunga-e-casuale
+      - ADMIN_USERNAME=efurlan
+      - ADMIN_PASSWORD=efurlan123!
     volumes:
-      - ./data:/app/data         # Salva i dati fuori dal container per non perderli
+      - /opt/data/receipt-app/backend_data:/app/data
     ports:
-      - "8000:8000"
-
+      - 8000:8000
+    networks:
+      - proxy-network
   frontend:
     build: ./frontend
     container_name: receipt-frontend
     restart: always
     depends_on:
       - backend
-
-# --- QUESTA È LA PARTE CHE MANCAVA ---
-volumes:
-  caddy_data:
-
-  caddy_config:
+    ports:
+      - 3001:80
+    networks:
+      - proxy-network
+networks:
+  proxy-network:
+    external: true
 
 
 
