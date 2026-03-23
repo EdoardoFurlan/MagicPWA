@@ -3,10 +3,8 @@ services:
     build: ./backend
     container_name: receipt-backend
     restart: always
-    environment:
-      - BACKEND_SECRET_KEY=una-chiave-molto-lunga-e-casuale
-      - ADMIN_USERNAME=efurlan
-      - ADMIN_PASSWORD=efurlan123!
+    env_file:
+      - /opt/env/.env
     volumes:
       - /opt/data/receipt-app/backend_data:/app/data
     ports:
