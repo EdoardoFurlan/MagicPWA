@@ -8,13 +8,7 @@ jobs:
   deploy:
     runs-on: self-hosted  # Questo dice a GitHub di eseguire i comandi sul TUO Raspberry
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build and Restart Container
+     - name: Update code Restart Container
         run: |
-          # Crea la cartella se non esiste
-          mkdir -p ./data/logs
-          # Forza i permessi per l'utente 1000 (pi)
-          sudo chown -R 1000:1000 ./data
+          cd /opt/stacks/receipt-app
           docker compose up -d --build
