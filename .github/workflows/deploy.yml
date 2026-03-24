@@ -10,6 +10,6 @@ jobs:
     steps:
      - name: Update code Restart Container
        run: |
-          cd /opt/stacks/receipt-app
+          cd /opt/stacks/magic-pwa
           git pull origin main
           docker compose up -d --build
