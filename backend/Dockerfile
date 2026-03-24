@@ -20,5 +20,5 @@ RUN chown -R 1000:1000 /app
 # Switchiamo all'utente 1000 così il container non gira come root
 USER 1000
 # Avvia FastAPI
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
