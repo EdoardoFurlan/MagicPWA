@@ -49,7 +49,7 @@ export function LoginPage() {
   return (
     <div className="flex items-center justify-center h-screen -mt-32">
       <Card className="w-full max-w-md">
-        <CardHeader><CardTitle>Accesso App Scontrini</CardTitle></CardHeader>
+        <CardHeader><CardTitle>Receipt Manager</CardTitle></CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input name="username" placeholder="Username" />
