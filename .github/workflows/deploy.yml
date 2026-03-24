@@ -11,4 +11,5 @@ jobs:
      - name: Update code Restart Container
         run: |
           cd /opt/stacks/receipt-app
+          git pull origin main
           docker compose up -d --build
