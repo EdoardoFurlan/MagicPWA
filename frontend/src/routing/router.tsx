@@ -9,8 +9,7 @@ import {
 import { useAuthStore } from '../store/authStore';
 import { LoginPage } from '../pages/LoginPage';
 import { HomePage } from '../pages/HomePage';
-import { Suspense, useEffect } from 'react';
-import {useNavigate} from '@tanstack/react-router';
+import { Suspense } from 'react';
 import { Navbar } from '../components/navbar';
 import { NfcPage } from '../pages/NfcPage';
 import { ScanPage } from '../pages/ScanPage';
@@ -19,26 +18,25 @@ import React from 'react';
 
 
 
+const protectedLoader = ({ location }: { location: any }) => {
+  const token = useAuthStore.getState().token;
+  if (!token) {
+    throw redirect({
+      to: '/login',
+      search: { redirect: location.href },
+    });
+  }
+};
+
 const RootComponent = () => {
-  const token = useAuthStore((state) => state.token);
-  const navigate = useNavigate();
-
-  // Reagisce ai cambiamenti del token
-  useEffect(() => {
-    if (!token) {
-      navigate({ to: '/login' });
-    }
-  }, [token, navigate]);
-
-
-const TanStackRouterDevtools =
-  import.meta.env.MODE === 'production'
-    ? () => null
-    : React.lazy(() =>
-        import('@tanstack/router-devtools').then((res) => ({
-          default: res.TanStackRouterDevtools,
-        })),
-      )
+  const TanStackRouterDevtools =
+    import.meta.env.MODE === 'production'
+      ? () => null
+      : React.lazy(() =>
+          import('@tanstack/router-devtools').then((res) => ({
+            default: res.TanStackRouterDevtools,
+          })),
+        );
 
   return (
     <div className="min-h-screen bg-background">
@@ -87,13 +85,15 @@ const loginRoute = createRoute({
 const nfcRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/nfc',
-  component: NfcPage
+  component: NfcPage,
+  beforeLoad: protectedLoader,
 });
 
 const scanRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/scan',
   component: ScanPage,
+  beforeLoad: protectedLoader,
 });
 
 // 4. Creazione dell'albero delle rotte
