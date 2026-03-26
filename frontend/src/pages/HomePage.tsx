@@ -1,15 +1,9 @@
 import { Button } from  "@/components/ui/button";
-import { Camera, FileSpreadsheet } from "lucide-react"; //LogOut
+import { Camera, FileSpreadsheet } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
 
 export function HomePage() {
-
-
-
-  //todo gestire caricamento scontrino con fotocamera, e chiamata api trmite apiFetch() appena creata, con gestione token e errori (es. token scaduto)
-
-
-
-
+  const navigate = useNavigate();
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
@@ -19,7 +13,7 @@ export function HomePage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Pulsantoni ottimizzati per il pollice su smartphone */}
-        <Button className="h-32 text-lg flex flex-col gap-2 bg-white dark:bg-gray-800 text-black dark:text-white">
+        <Button onClick={() => navigate({ to: '/scan' })} className="h-32 text-lg flex flex-col gap-2 bg-white dark:bg-gray-800 text-black dark:text-white">
           <Camera className="h-8 w-8" />
           Scansiona Scontrino
         </Button>

@@ -13,6 +13,7 @@ import { Suspense, useEffect } from 'react';
 import {useNavigate} from '@tanstack/react-router';
 import { Navbar } from '../components/navbar';
 import { NfcPage } from '../pages/NfcPage';
+import { ScanPage } from '../pages/ScanPage';
 import React from 'react';
 
 
@@ -89,8 +90,14 @@ const nfcRoute = createRoute({
   component: NfcPage
 });
 
+const scanRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/scan',
+  component: ScanPage,
+});
+
 // 4. Creazione dell'albero delle rotte
-const routeTree = rootRoute.addChildren([indexRoute, loginRoute, nfcRoute]);
+const routeTree = rootRoute.addChildren([indexRoute, loginRoute, nfcRoute, scanRoute]);
 
 export const router = createRouter({ routeTree });
 
