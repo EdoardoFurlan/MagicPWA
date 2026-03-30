@@ -21,6 +21,21 @@ services:
       - 3001:80
     networks:
       - proxy-network
+  ollama:
+    image: ollama/ollama:latest
+    container_name: receipt-ollama
+    profiles:
+      - ollama
+    ports:
+      - 11434:11434
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - proxy-network
+
+volumes:
+  ollama_data:
+
 networks:
   proxy-network:
     external: true

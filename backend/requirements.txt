@@ -10,6 +10,7 @@ passlib[bcrypt]
 pytesseract         # Wrapper per l'engine Tesseract (molto leggero su Rasp)
 opencv-python-headless # Manipolazione immagini senza interfaccia grafica
 Pillow              # Gestione formati immagine
+httpx               # Client HTTP per chiamate a Ollama
 
 # Elaborazione Dati ed Excel
 pandas              # Manipolazione tabelle

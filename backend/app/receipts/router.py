@@ -8,4 +8,4 @@ router = APIRouter(prefix="/api", tags=["receipts"])
 
 @router.post("/upload-receipt/", response_model=ReceiptResponse)
 async def upload_receipt(file: UploadFile = File(...)):
-    return process_receipt(file)
+    return await process_receipt(file)
