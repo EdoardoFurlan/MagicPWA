@@ -13,7 +13,8 @@ def validate_file(file: UploadFile) -> None:
 
 def save_file(file: UploadFile) -> str:
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-    filename = f"{timestamp}_{file.filename}"
+    original_filename = file.filename or "unknown"
+    filename = f"{timestamp}_{original_filename}"
     file_path = UPLOAD_DIR / filename
 
     with open(file_path, "wb") as buffer:
@@ -22,11 +23,26 @@ def save_file(file: UploadFile) -> str:
     return str(file_path)
 
 
+def get_pasto(ora: int) -> str:
+    if 5 <= ora < 11:
+        return "Colazione"
+    elif 11 <= ora < 16:
+        return "Pranzo"
+    else:
+        return "Cena"
+
+
 def extract_data_from_receipt(file_path: str) -> ExtractedData:
+    now = datetime.now()
+    data_formatted = now.strftime("%d/%m/%Y %H:%M")
+    ora = now.hour
+    pasto = get_pasto(ora)
+
     return ExtractedData(
-        data="2024-05-20",
+        data=data_formatted,
         totale=15.50,
-        valuta="EUR"
+        valuta="EUR",
+        pasto=pasto
     )
 
 
@@ -36,7 +52,7 @@ def process_receipt(file: UploadFile) -> ReceiptResponse:
     extracted = extract_data_from_receipt(saved_path)
 
     return ReceiptResponse(
-        filename=file.filename,
+        filename=file.filename or "unknown",
         saved_at=saved_path,
         extracted_data=extracted,
         status="success"

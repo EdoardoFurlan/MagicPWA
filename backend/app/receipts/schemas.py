@@ -5,6 +5,7 @@ class ExtractedData(BaseModel):
     data: str
     totale: float
     valuta: str = "EUR"
+    pasto: str
 
 
 class ReceiptResponse(BaseModel):

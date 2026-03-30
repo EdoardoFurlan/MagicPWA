@@ -4,7 +4,10 @@ export const apiFetch = async (endpoint: string, options: RequestInit = {}) => {
   const { token, logout } = useAuthStore.getState();
 
   const headers = new Headers(options.headers);
-  headers.set('Content-Type', 'application/json');
+  
+  if (!(options.body instanceof FormData)) {
+    headers.set('Content-Type', 'application/json');
+  }
   
   if (token) {
     headers.set('Authorization', `Bearer ${token}`);
